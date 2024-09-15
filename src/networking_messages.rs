@@ -319,6 +319,6 @@ impl<Manager> SessionRequest<Manager> {
 
 impl<Manager> Drop for SessionRequest<Manager> {
     fn drop(&mut self) {
-        self.reject_inner();
+        //self.reject_inner();
     }
 }
