@@ -385,13 +385,13 @@ impl_callback!(_cb: SteamServersConnected_t => SteamServersConnected {
 #[derive(Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct SteamServersDisconnected {
-    /// The reason we were disconnected from the Steam servers
-    pub reason: SteamError,
+    /// The reason we were disconnected from the Steam servers.
+    pub reason: crate::SResult<()>,
 }
 
 impl_callback!(cb: SteamServersDisconnected_t => SteamServersDisconnected {
     Self {
-        reason: cb.m_eResult.into(),
+        reason: crate::to_steam_result(cb.m_eResult),
     }
 });
 
@@ -399,15 +399,15 @@ impl_callback!(cb: SteamServersDisconnected_t => SteamServersDisconnected {
 #[derive(Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct SteamServerConnectFailure {
-    /// The reason we failed to connect to the Steam servers
-    pub reason: SteamError,
+    /// The reason we failed to connect to the Steam servers.
+    pub reason: crate::SResult<()>,
     /// Whether we are still retrying the connection.
     pub still_retrying: bool,
 }
 
 impl_callback!(cb: SteamServerConnectFailure_t => SteamServerConnectFailure {
     Self {
-        reason: cb.m_eResult.into(),
+        reason: crate::to_steam_result(cb.m_eResult),
         still_retrying: cb.m_bStillRetrying,
     }
 });
